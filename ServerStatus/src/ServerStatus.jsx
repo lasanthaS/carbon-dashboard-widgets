@@ -21,39 +21,46 @@ let serverData = [
 
 let styles = {
     wrapper: {
-        padding: '30px 15px 15px 15px'
+        padding: '30px 15px 15px 15px',
+        font: '11px Roboto, sans-serif'
     },
     container: {
         width: '33.33%',
-        height: '100%',
         'min-height': '200px',
-        'background-color': '#fc0',
         float: 'left',
         padding: '10px',
         'box-sizing': 'border-box'
     },
-    containerDiv: {
-        height: '100%',
+    containerDivUp: {
         'min-height': '180px',
-        'background-color': 'blue'
+        'background-color': '#19862b',
+        'padding-top': '30px'
     },
-    h3_p: {
+    containerDivDown: {
+        'min-height': '180px',
+        'background-color': '#d00000',
+        'padding-top': '30px'
+    },
+    h3: {
         margin: 0,
         padding: '10px',
         'text-align': 'center',
-        color: '#fff'
+        color: '#fff',
+        'font-size': '32px'
     },
-    statusDiv: {
-        'text-align': 'center'
-    },
-    statusSpan: {
-        display: 'inline-block',
-        margin: '0 auto',
+    p: {
+        margin: 0,
         padding: '10px',
-        border: '2px solid #000',
-        'background-color': '#00ff00',
-        width: '80px',
-        'text-align': 'center'
+        'text-align': 'center',
+        color: '#fff',
+    },
+    h1: {
+        color: '#fff',
+        'font-size': '36px',
+        margin: 0,
+        'padding-bottom': '10px',
+        'margin-bottom': '15px',
+        'border-bottom': '1px solid #444'
     }
 }
 
@@ -78,6 +85,7 @@ class ServerStatus extends Component {
     render () {
         return (
             <section style={styles.wrapper}>
+                <h1 style={styles.h1}>System Analytics</h1>
                 {this.state.servers}
             </section>
         );
@@ -87,12 +95,9 @@ class ServerStatus extends Component {
         let servers = serverData.map((s) => {
             return (
                 <div style={styles.container}>
-                    <div style={styles.containerDiv}>
-                        <h3 style={styles.h3_p}>{s.name}</h3>
-                        <p style={styles.h3_p}><strong>IP Address: </strong>{s.ip}</p>
-                        <div  style={styles.statusDiv}>
-                            <span style={styles.statusSpan}>{s.status ? 'Available': 'Failed'}</span>
-                        </div>
+                    <div style={s.status ? styles.containerDivUp : styles.containerDivDown}>
+                        <h3 style={styles.h3}>{s.name}</h3>
+                        <p style={styles.p}><strong>IP Address: </strong>{s.ip}</p>
                     </div>
                 </div>
             );

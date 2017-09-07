@@ -21,14 +21,16 @@ class CpuUsage extends Component {
         this.publishData();
     }
 
-    formatDateLabel(m, s) {
-        return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+    formatDateLabel(dt) {
+        let h = dt.getHours();
+        let m = dt.getMinutes();
+        let s = dt.getSeconds();
+        return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
     }
 
     publishData() {
-        let dt = new Date();
         data.push({
-            timestamp: this.formatDateLabel(dt.getMinutes(), dt.getSeconds()), 
+            timestamp: this.formatDateLabel(new Date()), 
             cpu1: Math.round(Math.random() * 100), 
             cpu2: Math.round(Math.random() * 100)
         });
@@ -50,17 +52,20 @@ class CpuUsage extends Component {
     }
 
     render () {
+        let styles = {
+            font: '11px Roboto, sans-serif'
+        };
         return (
-                <section>
+                <section style={styles}>
                     <AreaChart width={this.state.width} height={this.state.height} data={this.state.data} 
                         margin={{top: 30, right: 30, left: 20, bottom: 10}}>
                         <XAxis dataKey="timestamp"/>
                         <YAxis/>
-                        <CartesianGrid strokeDasharray="10 10"/>
+                        <CartesianGrid strokeDasharray="10 10" vertical={false}/>
                         <Tooltip/>
                         <Legend />
-                        <Area type='monotone' dataKey='cpu1' name='CPU 1' stackId="1" stroke='#ff0000' fill='#ff0000' isAnimationActive={false}/>
-                        <Area type='monotone' dataKey='cpu2' name='CPU 2' stackId="1" stroke='#00ff00' fill='#00ff00' isAnimationActive={false}/>
+                        <Area type='monotone' dataKey='cpu1' name='CPU 1' stroke='#0097a7' fill='#0097a7' fillOpacity={0.6} isAnimationActive={false}/>
+                        <Area type='monotone' dataKey='cpu2' name='CPU 2' stroke='#ff6217' fill='#ff6217' fillOpacity={0.6} isAnimationActive={false}/>
                     </AreaChart>
                 </section>
         );

@@ -21,14 +21,16 @@ class MemoryUsage extends Component {
         this.publishData();
     }
 
-    formatDateLabel(m, s) {
-        return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+    formatDateLabel(dt) {
+        let h = dt.getHours();
+        let m = dt.getMinutes();
+        let s = dt.getSeconds();
+        return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
     }
 
     publishData() {
-        let dt = new Date();
         data.push({
-            timestamp: this.formatDateLabel(dt.getMinutes(), dt.getSeconds()), 
+            timestamp: this.formatDateLabel(new Date()), 
             memory: Math.round(Math.random() * 100)
         });
 
@@ -49,16 +51,20 @@ class MemoryUsage extends Component {
     }
 
     render () {
+        let styles = {
+            font: '11px Roboto, sans-serif',
+            color: '#fff'
+        };
         return (
-                <section>
+                <section style={styles}>
                     <LineChart width={this.state.width} height={this.state.height} data={this.state.data} 
                         margin={{top: 30, right: 30, left: 20, bottom: 10}}>
                         <XAxis dataKey="timestamp"/>
                         <YAxis/>
-                        <CartesianGrid strokeDasharray="10 10"/>
+                        <CartesianGrid strokeDasharray="10 10" vertical={false}/>
                         <Tooltip/>
                         <Legend />
-                        <Line type='monotone' dataKey='memory' name='Memory %' stroke='#ff0000' isAnimationActive={false}/>
+                        <Line type='monotone' dataKey='memory' name='Memory %' stroke='#fc0' isAnimationActive={false}/>
                     </LineChart>
                 </section>
         );
